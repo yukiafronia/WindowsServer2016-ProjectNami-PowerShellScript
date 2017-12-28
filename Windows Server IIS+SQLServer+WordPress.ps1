@@ -64,14 +64,14 @@ $accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $per
 $ACL.SetAccessRule($accessRule)
 Set-Acl c:\translate.log -AclObject $ACL
 
-Start-BitsTransfer -Source "https://github.com/ProjectNami/projectnami/archive/1.5.7.zip" -Destination C:\projectnami-1.5.7.zip
+Start-BitsTransfer -Source "https://github.com/ProjectNami/projectnami/archive/1.7.1.zip" -Destination C:\projectnami-1.7.1.zip
 New-Item C:\Nami -itemType Directory
-Move-Item C:\projectnami-1.5.7.zip C:\Nami
+Move-Item C:\projectnami-1.7.1.zip C:\Nami
 cd C:\
 
 # Nami のファイルを C:\Inetput\wwwroot に展開
-Expand-Archive .\Nami\projectnami-1.5.7.zip -DestinationPath C:\temp
-Move-Item C:\temp\projectnami-1.5.7\* C:\inetpub\wwwroot
+Expand-Archive .\Nami\projectnami-1.7.1.zip -DestinationPath C:\temp
+Move-Item C:\temp\projectnami-1.7.1\* C:\inetpub\wwwroot
 
 # wp-config.php の作成
 Copy-Item "C:\inetpub\wwwroot\wp-config-sample.php" "C:\inetpub\wwwroot\wp-config.php"
