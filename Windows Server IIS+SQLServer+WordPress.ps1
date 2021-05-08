@@ -4,9 +4,9 @@ Get-NetFirewallProfile | Set-NetFirewallProfile -Enabled false
 #IISのインストール
 Install-WindowsFeature -Name @("Web-Server","Web-CGI") -IncludeManagementTools
 #PHP7.1(x64 Non Thread Safe)
-Start-BitsTransfer -Source "http://windows.php.net/downloads/releases/php-7.4.16-nts-Win32-vc15-x64.zip" -Destination C:\php-7.4.16-nts-Win32-vc15-x64.zip
-New-Item C:\PHP -itemType Directory
-Move-Item C:\php-7.4.16-nts-Win32-vc15-x64.zip C:\PHP
+Start-BitsTransfer -Source "http://windows.php.net/downloads/releases/php-7.4.19-nts-Win32-vc15-x64.zip" -Destination C:\php-7.4.19-nts-Win32-vc15-x64.zip
+New-Item 'C:\PHP' -itemType Directory
+Move-Item C:\php-7.4.19-nts-Win32-vc15-x64.zip C:\PHP
 cd C:\PHP
 #ダウンロードした.zipを解凍
 Expand-Archive .\php-7.4.16-nts-Win32-vc15-x64.zip -DestinationPath C:\PHP
