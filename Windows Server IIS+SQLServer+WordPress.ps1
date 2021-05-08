@@ -9,7 +9,7 @@ New-Item 'C:\PHP' -itemType Directory
 Move-Item C:\php-7.4.19-nts-Win32-vc15-x64.zip C:\PHP
 cd C:\PHP
 #ダウンロードした.zipを解凍
-Expand-Archive .\php-7.4.16-nts-Win32-vc15-x64.zip -DestinationPath C:\PHP
+Expand-Archive .\php-7.4.19-nts-Win32-vc15-x64.zip -DestinationPath C:\PHP
 Remove-Item C:\PHP\*.zip -Force
 # PATH の展開
 [Environment]::SetEnvironmentVariable("Path", ($env:Path += "C:\PHP"), [System.EnvironmentVariableTarget]::Machine )
