@@ -64,6 +64,8 @@ $accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule $per
 $ACL.SetAccessRule($accessRule)
 Set-Acl c:\translate.log -AclObject $ACL
 
+#ProjectNamiのファイルをダウンロード
+Start-Sleep -s 10
 Start-BitsTransfer -Source "https://github.com/ProjectNami/projectnami/archive/2.7.2.zip" -Destination C:\projectnami-2.7.2.zip
 New-Item C:\Nami -itemType Directory
 Move-Item C:\projectnami-2.7.2.zip C:\Nami
@@ -76,9 +78,16 @@ Move-Item C:\temp\projectnami-2.7.2\* C:\inetpub\wwwroot
 # wp-config.php の作成
 Copy-Item "C:\inetpub\wwwroot\wp-config-sample.php" "C:\inetpub\wwwroot\wp-config.php"
 
+#SQL Server接続のPowerShellModule
+Install-Module -Name "SqlServer" -AllowClobber
+
 #SQLServer2016 Enterpriseのサイレントインストール
 cd E:\
-.\Setup /q /ConfigurationFile="C:\Program Files\Microsoft SQL Server\130\Setup Bootstrap\Log\20170507_153828\ConfigurationFile.ini" /IACCEPTSQLSERVERLICENSETERMS="True" /IACCEPTROPENLICENSETERMS="True" /SAPWD="Password"
+Move-Item C:\Users\Administrator\Desktop\WindowsServer2016-ProjectNami-PowerShellScript\ConfigurationFile.ini C:\ConfigurationFile.ini
+.\Setup /ConfigurationFile="C:\ConfigurationFile.ini" /IACCEPTSQLSERVERLICENSETERMS="True" /IACCEPTROPENLICENSETERMS="True" /SAPWD="Password"
+
+#インストール中待機
+Start-Sleep -s 300
 
 # DB 周りの設定
 # WP 用ログインと DB の作成
@@ -90,7 +99,9 @@ GO
 "@
 Invoke-Sqlcmd -ServerInstance localhost -Query $sql
 Restart-Service -Name "MSSQLSERVER"
- 
+
+#SQL Server DB設定
+#WordPressUser , WordPressPassword , WordPressDatabase"
 $sql =@"
 CREATE DATABASE WordPressDatabase COLLATE SQL_Latin1_General_CP1_CI_AS
 GO
